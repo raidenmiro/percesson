@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@2.1.1/schema.json",
+  "baseBranch": "main",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "raidenmiro/percesso" }
+  ],
+  "commit": false,
+  "access": "restricted",
+  "fixed": [],
+  "linked": [],
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}
