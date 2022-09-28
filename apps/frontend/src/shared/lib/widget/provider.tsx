@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component, createContext, onCleanup, onMount, useContext } from 'solid-js'
 import { Widget } from './create-widget'
+import { Dynamic } from 'solid-js/web'
 
 const widgetContext = createContext<Widget | null>(null)
 
@@ -25,11 +26,9 @@ export const Provider = (props: { children: Component; widget: Widget }) => {
     props.widget.instance.removeRef()
   })
 
-  const Children = props.children
-
   return (
     <widgetContext.Provider value={props.widget}>
-      <Children ref={ref!} />
+      <Dynamic ref={ref!} component={props.children} />
     </widgetContext.Provider>
   )
 }
