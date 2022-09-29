@@ -4,3 +4,8 @@ pre-commit:
     format:
       glob: '*.{js,ts,jsx,tsx}'
       run: pnpm prettier --write {staged_files}
+
+commit-msg:
+  scripts:
+    'commit-lint':
+      runner: bash
