@@ -1,17 +1,23 @@
 import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
-import { Observable } from 'rxjs'
 import { AxiosResponse } from 'axios'
+import { request } from '../../shared/lib/request'
 
 @Injectable()
 export class UnsplashService {
   constructor(private readonly httpService: HttpService) {}
 
-  getRandom(): Observable<AxiosResponse<{ stub: string }>> {
-    return this.httpService.get('/photos/random')
+  getRandom(): Promise<AxiosResponse<{ stub: string }>> {
+    return request(this.httpService, {
+      url: '/photos/random',
+      method: 'GET',
+    })
   }
 
   findOne(where: { id: number }) {
-    return this.httpService.get(where.id.toString())
+    return request(this.httpService, {
+      url: where.id.toString(),
+      method: 'GET',
+    })
   }
 }

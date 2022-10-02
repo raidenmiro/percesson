@@ -6,9 +6,10 @@ const schema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   DATABASE_USERNAME: Joi.string().required(),
   DATABASE_PASSWORD: Joi.string().required(),
-  UNSPlASH_TOKEN: Joi.string().required(),
+  UNSPLASH_TOKEN_ACCESS: Joi.string().required(),
   UNSPLASH_URL: Joi.string().required(),
-})
+  UNSPLASH_SECRET: Joi.string().optional(),
+}).unknown()
 
 export function validate(config: Record<string, unknown>) {
   const { error } = schema.validate(config)
@@ -28,7 +29,8 @@ export function validate(config: Record<string, unknown>) {
     },
     unsplash: {
       baseUrl: env.get('UNSPLASH_URL').asString(),
-      token: env.get('UNSPLASH_TOKEN').asString(),
+      token: env.get('UNSPLASH_TOKEN_ACCESS').asString(),
+      secret: env.get('UNSPLASH_SECRET').asString(),
     },
   }
 }

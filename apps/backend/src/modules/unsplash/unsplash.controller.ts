@@ -7,7 +7,7 @@ export class UnsplashController {
 
   @Get('/')
   async getRandom() {
-    this.unsplashService.getRandom()
+    return this.unsplashService.getRandom()
   }
 
   @Get(':id')

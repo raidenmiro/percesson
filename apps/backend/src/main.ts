@@ -4,7 +4,7 @@ import { AppModule } from './modules/app/app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 
 const logger = new Logger('Application')
-const globalPrefix = 'api'
+const PORT = 3333
 
 function setupSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -19,12 +19,11 @@ function setupSwaggerDocs(app: INestApplication) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  app.setGlobalPrefix(globalPrefix)
 
   setupSwaggerDocs(app)
 
-  await app.listen(3333)
-  logger.log(`🚀 Application is running on: http://localhost:3333`)
+  await app.listen(PORT)
+  logger.log(`🚀 Application is running on: http://localhost:${PORT}`)
 }
 
 try {
