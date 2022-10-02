@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createStore, createEvent, sample, Event, Unit } from 'effector'
+import { createEvent, createStore, Event, sample, Unit } from 'effector'
 import { empty, not } from 'patronum'
 import { createRefMeta } from './meta'
 
@@ -19,7 +19,7 @@ export const createWidget = () => {
   sample({ source: open, target: opened })
   sample({ source: close, target: closed })
 
-  type Chain = {
+  interface Chain {
     openOn: Unit<any>
     beforeOpen: Event<any>
     cancelOn: Unit<any>
