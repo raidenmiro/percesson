@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Component, createContext, onCleanup, onMount, useContext } from 'solid-js'
+import { createContext, JSX, onCleanup, onMount, useContext } from 'solid-js'
 import { Widget } from './create-widget'
-import { Dynamic } from 'solid-js/web'
 
 const widgetContext = createContext<Widget | null>(null)
 
@@ -15,22 +14,20 @@ export const useSource = () => {
   return widget
 }
 
-export const Provider = (props: { children: Component; widget: Widget }) => {
-  let ref: HTMLElement
-
+export const Provider = <TElement extends HTMLElement>(props: {
+  children: JSX.Element
+  widget: Widget
+  ref: TElement
+}) => {
   onMount(() => {
-    props.widget.instance.addRef(ref)
+    props.widget.instance.addRef(props.ref)
   })
 
   onCleanup(() => {
     props.widget.instance.removeRef()
   })
 
-  return (
-    <widgetContext.Provider value={props.widget}>
-      <Dynamic ref={ref!} component={props.children} />
-    </widgetContext.Provider>
-  )
+  return <widgetContext.Provider value={props.widget}>{props.children}</widgetContext.Provider>
 }
 
 export const widget = {
