@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Optional } from '../../../types'
 import { createPlugin } from '../create-plugin'
 
 type ListenersEvents = keyof WindowEventMap
 
 export const OutsideClicked = createPlugin<
   { handler: () => void; events?: ListenersEvents[]; nodes?: HTMLElement[] },
-  HTMLDivElement, // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any
+  HTMLDivElement
 >({
   creator: ({ options, element }) => {
     const DEFAULT_EVENTS: ListenersEvents[] = ['mousedown', 'touchstart']
@@ -13,8 +14,9 @@ export const OutsideClicked = createPlugin<
     const { nodes, handler, events } = options
     const subscribes = events ?? DEFAULT_EVENTS
 
+    let ref: Optional<<EventType extends keyof WindowEventMap>(evt: WindowEventMap[EventType]) => void> = null
+
     return {
-      ref: null,
       onMount() {
         const listener = <EventType extends keyof WindowEventMap>(evt: WindowEventMap[EventType]) => {
           if (Array.isArray(nodes)) {
@@ -30,12 +32,11 @@ export const OutsideClicked = createPlugin<
 
         subscribes.forEach(fn => element.addEventListener(fn, listener))
 
-        this.ref = listener
+        ref = listener
       },
       unMount() {
-        if (this.ref) {
-          subscribes.forEach(fn => element.addEventListener(fn, this.ref))
-        }
+        // @ts-expect-error
+        if (ref) subscribes.forEach(fn => element.removeEventListener(fn))
       },
     }
   },
