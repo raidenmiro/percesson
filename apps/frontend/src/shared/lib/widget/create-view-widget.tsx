@@ -1,41 +1,48 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { useUnit } from 'effector-solid'
+import { JSX, onCleanup, onMount, splitProps } from 'solid-js'
+import { Dynamic, Portal, Show } from 'solid-js/web'
 import { Widget } from './create-widget'
 import { PluginCreator } from './plugins/create-plugin'
-import { useUnit } from 'effector-solid'
-import { Dynamic, Portal, Show } from 'solid-js/web'
-import { createMemo, JSX, onCleanup, onMount } from 'solid-js'
-import { Provider } from './provider'
 
-export const createViewWidget = ({
+export const createViewWidget = <
+  TagName extends HTMLElementTagNameMap,
+  TElement = { [Key in keyof TagName]: Pick<TagName, Key> },
+>({
   mountNode = document.body,
-  source,
+  tagName = 'div',
+  connector,
   plugins,
 }: {
   mountNode?: HTMLElement
-  source: Widget
-  plugins: Array<PluginCreator>
+  tagName?: keyof TagName
+  connector: Widget // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  plugins: Array<PluginCreator<any>>
 }) => {
-  return function ({ children }: { children: JSX.Element }) {
-    const isOpen = useUnit(source.state.$isOpen)
+  return function (props: { children: JSX.Element; attr: JSX.HTMLAttributes<TElement> }) {
+    const [rest, attr] = splitProps(props, ['children'])
+    const isOpen = useUnit(connector.state.$isOpen)
 
-    let ref: HTMLDivElement
-
-    const lifecycle = createMemo(() => plugins.map(callback => callback(ref)))
+    let ref: HTMLElement
 
     onMount(() => {
-      lifecycle().forEach(callback => callback.onMount())
-    })
+      const lifecycle = plugins.map(plugin => plugin(ref))
+      connector.instance.addRef(ref)
 
-    onCleanup(() => {
-      lifecycle().forEach(callback => callback.unMount())
+      lifecycle.forEach(cb => cb.onMount())
+
+      onCleanup(() => {
+        lifecycle.forEach(cb => cb.unMount())
+        connector.instance.removeRef()
+      })
     })
 
     return (
       <Portal mount={mountNode}>
         <Show when={isOpen()} keyed={true}>
-          <Provider widget={source} ref={ref!}>
-            <Dynamic ref={ref!} component={children} />
-          </Provider>
+          <Dynamic ref={ref!} component={tagName} {...attr}>
+            {rest.children}
+          </Dynamic>
         </Show>
       </Portal>
     )
