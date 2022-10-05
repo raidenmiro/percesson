@@ -2,8 +2,10 @@ import { createEffect, createEvent, createStore, sample } from 'effector'
 import { theme } from './constance'
 import { Theme } from './type'
 
+const DEFAULT_THEME = 'dark'
+
 const themeChosen = createEvent<Theme>()
-const $theme = createStore<Theme>('dark')
+const $theme = createStore<Theme>(DEFAULT_THEME)
 
 const subscribeThemeFx = createEffect(async () => {
   if (typeof window === 'undefined') throw new Error('not support')
@@ -39,7 +41,11 @@ const attachThemeFx = createEffect<{ theme: Theme }, void>(async ({ theme }) => 
 
 sample({ clock: subscribeThemeFx.doneData, target: watchPreferenceFx })
 
-sample({ clock: subscribeThemeFx.doneData, filter: $theme.map(theme => theme === 'dark'), target: loadPreferenceFx })
+sample({
+  clock: subscribeThemeFx.doneData,
+  filter: $theme.map(theme => theme === DEFAULT_THEME),
+  target: loadPreferenceFx,
+})
 
 sample({ clock: $theme, filter: Boolean, fn: theme => ({ theme }), target: attachThemeFx })
 
