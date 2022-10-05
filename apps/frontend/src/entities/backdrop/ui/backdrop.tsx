@@ -21,7 +21,7 @@ export const Backdrop = (props: Props) => {
       <source srcset={props.url.small} media={up(unit().xs)} />
       <source srcset={props.url.regular} media={up(unit().md[0]) && down(unit().md[1])} />
       <source srcset={props.url.raw} media={up(unit().xl)} />
-      <img class="fixed top-0 left-0 min-w-full min-h-full" src={props.url.regular} alt={props.name} />
+      <img draggable={false} class="fixed top-0 left-0 min-w-full min-h-full" src={props.url.regular} />
     </picture>
   )
 }
