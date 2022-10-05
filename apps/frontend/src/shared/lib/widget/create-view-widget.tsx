@@ -19,7 +19,7 @@ export const createViewWidget = <
   connector: Widget // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plugins: Array<PluginCreator<any>>
 }) => {
-  return function (props: { children: JSX.Element; attr: JSX.HTMLAttributes<TElement> }) {
+  return function (props: { children: JSX.Element } & JSX.HTMLAttributes<TElement>) {
     const [rest, attr] = splitProps(props, ['children'])
     const isOpen = useUnit(connector.state.$isOpen)
 
