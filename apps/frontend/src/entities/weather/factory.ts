@@ -1,6 +1,6 @@
 import { DragGesture } from '@use-gesture/vanilla'
 import anime from 'animejs'
-import { Optional } from '../../shared/lib/types/index'
+import { Optional } from '../../shared/lib/types'
 import { createPlugin, createViewWidget } from '../../shared/lib/widget'
 import { $weather } from './model'
 
