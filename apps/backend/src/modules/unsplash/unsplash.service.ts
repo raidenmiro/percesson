@@ -16,7 +16,7 @@ export class UnsplashService {
 
   findOne(where: { id: number }) {
     return request(this.httpService, {
-      url: where.id.toString(),
+      url: `/photos/${where.id.toString()}`,
       method: 'GET',
     })
   }

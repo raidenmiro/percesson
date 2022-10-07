@@ -17,11 +17,13 @@ export const Backdrop = (props: Props) => {
   const { up, down } = breakpoint.matcher
 
   return (
-    <picture>
-      <source srcset={props.url.small} media={up(unit().xs)} />
-      <source srcset={props.url.regular} media={up(unit().md[0]) && down(unit().md[1])} />
-      <source srcset={props.url.raw} media={up(unit().xl)} />
-      <img draggable={false} class="fixed top-0 left-0 min-w-full min-h-full" src={props.url.regular} />
-    </picture>
+    <div class="fixed top-0 left-0 min-w-full min-h-full">
+      <picture>
+        <source srcset={props.url.small} media={down(unit().xs)} />
+        <source srcset={props.url.regular} media={up(unit().md[0]) + ' and ' + down(unit().md[1])} />
+        <source srcset={props.url.raw} media={up(unit().xl)} />
+        <img class="w-full h-full object-cover" draggable={false} src={props.url.regular} />
+      </picture>
+    </div>
   )
 }
