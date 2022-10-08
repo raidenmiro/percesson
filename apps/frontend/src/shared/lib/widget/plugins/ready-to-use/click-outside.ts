@@ -1,4 +1,4 @@
-import { Optional } from '../../../types/index'
+import { Optional } from '../../../types'
 import { createPlugin } from '../create-plugin'
 
 type ListenersEvents = keyof WindowEventMap

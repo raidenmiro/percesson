@@ -2,7 +2,7 @@ import './application.css'
 import { useUnit } from 'effector-solid'
 import { onMount } from 'solid-js'
 import { Backdrop } from '../entities/backdrop/ui/backdrop'
-import { TabBar } from '../entities/tab-bar/ui/tab-bar'
+import { TabBar } from '../entities/tab-bar'
 import { $theme, subscribeThemeFx, ThemeProvider } from '../features/theme'
 
 export const App = () => {

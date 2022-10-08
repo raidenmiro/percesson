@@ -1,5 +1,14 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { createMemo, createSignal, onCleanup } from 'solid-js'
 import { Plus } from '../../../shared/icons/plus'
+
+declare module 'solid-js' {
+  namespace JSX {
+    interface Directives {
+      clickOutside: <TElement extends HTMLElement>(el: TElement, accessor: () => void) => void
+    }
+  }
+}
 
 export const clickOutside = <TElement extends HTMLElement>(el: TElement, accessor: () => () => void) => {
   const root = document.body // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,8 +28,7 @@ export const SetupTab = (props: { onClick?(): void }) => {
 
   return (
     <button
-      type="button" // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      type="button"
       use:clickOutside={() => toggle(false)}
       classList={{
         'relative w-12 h-12 transition-all': true,
