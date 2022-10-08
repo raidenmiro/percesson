@@ -1,5 +1,13 @@
-import { createMemo, createSignal } from 'solid-js'
+import { createMemo, createSignal, onCleanup } from 'solid-js'
 import { Plus } from '../../../shared/icons/plus'
+
+export const clickOutside = <TElement extends HTMLElement>(el: TElement, accessor: () => () => void) => {
+  const root = document.body // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onClick = (evt: MouseEvent & { target: any }) => !el.contains(evt.target) && accessor()()
+
+  root.addEventListener('click', onClick)
+  onCleanup(() => document.body.removeEventListener('click', onClick))
+}
 
 export const SetupTab = (props: { onClick?(): void }) => {
   const [rotate, toggle] = createSignal(false)
@@ -11,7 +19,9 @@ export const SetupTab = (props: { onClick?(): void }) => {
 
   return (
     <button
-      type="button"
+      type="button" // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      use:clickOutside={() => toggle(false)}
       classList={{
         'relative w-12 h-12 transition-all': true,
         'flex items-center justify-center rounded-full': true,
@@ -19,7 +29,7 @@ export const SetupTab = (props: { onClick?(): void }) => {
         'bg-gradient-to-r from-cyan-500 to-blue-500': !rotate(),
       }}
       onClick={() => {
-        toggle(prev => !prev)
+        toggle(!rotate())
         props.onClick?.()
       }}>
       <Plus classList={classes()} style={{ transition: 'all 0.5s' }} />

@@ -1,12 +1,15 @@
-export const Close = () => {
+export const Close = (props: { class?: string }) => {
   return (
-    <svg fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      aria-hidden="true"
+      class={props.class}
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg">
       <path
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        xmlns="http://www.w3.org/2000/svg"
-        d="M5.29289 5.29289C5.68342 4.90237 6.31658 4.90237 6.70711 5.29289L12 10.5858L17.2929 5.29289C17.6834 4.90237 18.3166 4.90237 18.7071 5.29289C19.0976 5.68342 19.0976 6.31658 18.7071 6.70711L13.4142 12L18.7071 17.2929C19.0976 17.6834 19.0976 18.3166 18.7071 18.7071C18.3166 19.0976 17.6834 19.0976 17.2929 18.7071L12 13.4142L6.70711 18.7071C6.31658 19.0976 5.68342 19.0976 5.29289 18.7071C4.90237 18.3166 4.90237 17.6834 5.29289 17.2929L10.5858 12L5.29289 6.70711C4.90237 6.31658 4.90237 5.68342 5.29289 5.29289Z"
-        fill="currentColor"></path>
+        fill-rule="evenodd"
+        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+        clip-rule="evenodd"></path>
     </svg>
   )
 }
