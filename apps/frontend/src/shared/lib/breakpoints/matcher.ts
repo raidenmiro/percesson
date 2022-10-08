@@ -5,4 +5,5 @@ export const breakpoint = {
     up: (size: Size) => `(min-width: ${size})`,
     down: (size: Size) => `(max-width: ${size})`,
   },
+  merge: (...args: Size[]) => args.join(' and '),
 }

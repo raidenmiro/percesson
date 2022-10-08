@@ -20,9 +20,9 @@ export const Backdrop = (props: Props) => {
     <div class="fixed top-0 left-0 min-w-full min-h-full">
       <picture>
         <source srcset={props.url.small} media={down(unit().xs)} />
-        <source srcset={props.url.regular} media={up(unit().md[0]) + ' and ' + down(unit().md[1])} />
+        <source srcset={props.url.regular} media={breakpoint.merge(up(unit().md[0]), down(unit().md[1]))} />
         <source srcset={props.url.raw} media={up(unit().xl)} />
-        <img class="w-full h-full object-cover" draggable={false} src={props.url.regular} />
+        <img class="w-full h-full object-cover" draggable={false} src={props.url.regular} alt={props.name} />
       </picture>
     </div>
   )
