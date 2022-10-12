@@ -1,7 +1,7 @@
 import { INestApplication, Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './modules/app/app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { AppModule } from './modules/app/app.module'
 
 const logger = new Logger('Application')
 const PORT = 3333
@@ -14,7 +14,7 @@ function setupSwaggerDocs(app: INestApplication) {
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  SwaggerModule.setup('swagger', app, document)
 }
 
 async function bootstrap() {
@@ -27,9 +27,9 @@ async function bootstrap() {
 }
 
 try {
-  bootstrap().catch(err => {
-    logger.error(err, err.stack)
+  bootstrap().catch(error => {
+    logger.error(error, error.stack)
   })
-} catch (err) {
-  logger.error(err, err.stack)
+} catch (error) {
+  logger.error(error, error.stack)
 }

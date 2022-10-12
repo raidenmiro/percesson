@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common'
 import { HttpModule } from '@nestjs/axios'
-import { UnsplashService } from './unsplash.service'
-import { UnsplashController } from './unsplash.controller'
+import { Module } from '@nestjs/common'
 import { EnvModule, EnvService } from '../env'
+import { UnsplashController } from './unsplash.controller'
+import { UnsplashService } from './unsplash.service'
 
 @Module({
   imports: [

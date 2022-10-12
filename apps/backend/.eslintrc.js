@@ -9,12 +9,10 @@ module.exports = configure({
       },
     }),
     presets.prettier(),
-    presets.solidJs(),
-    presets.effector(),
     presets.typescript(),
   ],
   extend: {
-    extends: ['../../.eslintrc.json'],
+    extends: ['../../.eslintrc.json', 'plugin:rxjs/recommended'],
     overrides: [
       {
         files: ['*.ts', '*.tsx', '*.js', '*.jsx'],

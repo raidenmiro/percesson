@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common'
-
+import { EnvModule } from '../env'
+import { UnsplashModule } from '../unsplash'
+import { WeatherModule } from '../weather'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 
-import { EnvModule } from '../env'
-import { UnsplashModule } from '../unsplash'
-
 @Module({
-  imports: [EnvModule, UnsplashModule],
+  imports: [EnvModule, UnsplashModule, WeatherModule],
   providers: [AppService],
   controllers: [AppController],
 })
