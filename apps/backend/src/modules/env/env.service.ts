@@ -1,6 +1,6 @@
+import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import type { Env } from './types'
-import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class EnvService {
@@ -20,5 +20,9 @@ export class EnvService {
 
   get unsplash() {
     return this.getEnv('unsplash')
+  }
+
+  get weather() {
+    return this.getEnv('weather')
   }
 }
