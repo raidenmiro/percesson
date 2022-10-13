@@ -12,7 +12,7 @@ const scheme = {
   xl: 1920,
 }
 
-export const Backdrop = (props: Props) => {
+export const BackdropPhoto = (props: Props) => {
   const unit = createMemo(() => convert.all(scheme, convert.units.px))
   const { up, down } = breakpoint.matcher
 

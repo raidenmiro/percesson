@@ -1,1 +1,1 @@
-export * from './ui'
+export { TabBar } from './tab-bar'

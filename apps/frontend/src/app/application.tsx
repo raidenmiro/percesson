@@ -1,7 +1,7 @@
 import './application.css'
 import { useUnit } from 'effector-solid'
 import { onMount } from 'solid-js'
-import { Backdrop } from '../entities/backdrop/ui/backdrop'
+import { BackdropPhoto } from '../entities/backdrop/variants/backdrop-photo'
 import { TabBar } from '../entities/tab-bar'
 import { $theme, subscribeThemeFx, ThemeProvider } from '../features/theme'
 
@@ -14,7 +14,7 @@ export const App = () => {
 
   return (
     <ThemeProvider value={currentTheme()}>
-      <Backdrop
+      <BackdropPhoto
         name="aw6tcJCIhbU"
         url={{
           small:

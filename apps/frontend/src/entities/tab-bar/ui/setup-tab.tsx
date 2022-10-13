@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { createMemo, createSignal, onCleanup } from 'solid-js'
 import { Plus } from '../../../shared/icons/plus'
+import { Optional } from '../../../shared/lib/types'
 
 declare module 'solid-js' {
   namespace JSX {
@@ -10,15 +11,18 @@ declare module 'solid-js' {
   }
 }
 
-export const clickOutside = <TElement extends HTMLElement>(el: TElement, accessor: () => () => void) => {
-  const root = document.body // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onClick = (evt: MouseEvent & { target: any }) => !el.contains(evt.target) && accessor()()
+type Fn = () => () => void
 
-  root.addEventListener('click', onClick)
+export const clickOutside = <TElement extends HTMLElement>(el: TElement, accessor: Fn) => {
+  const onClick = (evt: MouseEvent & { target: Optional<EventTarget> }) => {
+    if (!el.contains(evt.target as Node)) accessor()()
+  }
+
+  document.body.addEventListener('click', onClick)
   onCleanup(() => document.body.removeEventListener('click', onClick))
 }
 
-export const SetupTab = (props: { onClick?(): void }) => {
+export const SetupTab = () => {
   const [rotate, toggle] = createSignal(false)
 
   const classes = createMemo(() => ({
@@ -36,10 +40,7 @@ export const SetupTab = (props: { onClick?(): void }) => {
         'bg-gradient-to-r from-cyan-600 to-blue-600': rotate(),
         'bg-gradient-to-r from-cyan-500 to-blue-500': !rotate(),
       }}
-      onClick={() => {
-        toggle(!rotate())
-        props.onClick?.()
-      }}>
+      onClick={() => toggle(!rotate())}>
       <Plus classList={classes()} style={{ transition: 'all 0.5s' }} />
     </button>
   )
