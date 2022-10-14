@@ -1,0 +1,33 @@
+api-version: reviewpad.com/v3.x
+
+mode: verbose
+
+rules:
+  - name: empty-description
+    spec: '$description() == ""'
+
+  - name: is-first-time-contributor
+    spec: '$pullRequestCountBy($author()) == 1'
+
+workflows:
+  - name: welcome-user
+    description: Welcome user first contribution
+    if:
+      - rule: is-first-time-contributor
+    then:
+      - '$commentOnce("Well done! This is your first contribution.")'
+
+  - name: comment-on-empty-description
+    description: Error on empty descriptions
+    if:
+      - rule: empty-description
+    then:
+      - '$error("The description of the pull request cannot be empty.")'
+
+  - name: comment-on-pull-request
+    description: Example comment on pull request
+    if:
+      - 'true'
+    then:
+      - '$info("Thanks for this pull request. @raidenmiro will take a look!")'
+      - '$warn("Please make sure the CI is green before merging.")'
