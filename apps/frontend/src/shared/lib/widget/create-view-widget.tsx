@@ -5,22 +5,26 @@ import { Optional } from '../types'
 import { Widget } from './create-widget'
 import type { Plugin, PluginCreator } from './plugins/create-plugin'
 
-export const createViewWidget = <
-  TagName extends HTMLElementTagNameMap,
-  TElement = { [Key in keyof TagName]: Pick<TagName, Key> },
->({
+type Attributes<T> = JSX.HTMLAttributes<T> & { innerHTML?: string }
+type PickElement<Tag> = { [Key in keyof Tag]: Pick<Tag, Key> }
+
+interface Props<Tag extends HTMLElementTagNameMap, TElement = PickElement<Tag>> extends Attributes<TElement> {
+  children?: JSX.Element
+  as?: keyof Tag
+  innerHTML?: string
+}
+
+export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement = PickElement<TagName>>({
   mountNode = document.body,
-  tagName = 'div',
   connector,
   plugins,
 }: {
   mountNode?: HTMLElement
-  tagName?: keyof TagName
   connector: Widget // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plugins: Array<PluginCreator<any>>
 }) => {
-  return function (props: { children: JSX.Element } & JSX.HTMLAttributes<TElement>) {
-    const [rest, attr] = splitProps(props, ['children'])
+  return function (props: Props<TagName, TElement>) {
+    const [rest, attr] = splitProps(props, ['children', 'as'])
 
     const isOpen = useUnit(connector.state.$isOpen)
     const [ref, setRef] = createSignal<Optional<HTMLElement>>(null)
@@ -48,7 +52,7 @@ export const createViewWidget = <
     return (
       <Portal mount={mountNode}>
         <Show when={isOpen()} keyed={true}>
-          <Dynamic ref={setRef} component={tagName} {...attr}>
+          <Dynamic ref={setRef} component={rest.as ?? 'div'} {...attr}>
             {rest.children}
           </Dynamic>
         </Show>
