@@ -17,7 +17,7 @@ export const BackdropPhoto = (props: Props) => {
   const { up, down } = breakpoint.matcher
 
   return (
-    <div class="fixed top-0 left-0 min-w-full min-h-full">
+    <div class="fixed top-0 left-0 min-w-full min-h-full -z-10">
       <picture>
         <source srcset={props.url.small} media={down(unit().xs)} />
         <source srcset={props.url.regular} media={breakpoint.merge(up(unit().md[0]), down(unit().md[1]))} />
