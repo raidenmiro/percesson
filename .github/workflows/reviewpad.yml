@@ -1,7 +1,9 @@
 name: Review pull request
 
 on:
-  pull_request
+  pull_request:
+    branches:
+      - main
 
 jobs:
   reviewpad-action:
@@ -9,4 +11,3 @@ jobs:
     steps:
       - name: Running reviewpad action 🚀
         uses: reviewpad/action@v3.x
-
