@@ -1,9 +1,21 @@
 name: Review pull request
 
 on:
-  pull_request:
-    branches:
-      - main
+  issues:
+    types:
+      - opened
+      - edited
+  issue_comment:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - edited
+  pull_request_review:
+
+permissions:
+  pull-requests: write
+  issues: write
 
 jobs:
   reviewpad-action:
@@ -11,3 +23,6 @@ jobs:
     steps:
       - name: Running reviewpad action 🚀
         uses: reviewpad/action@v3.x
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          file: reviewpad.yml

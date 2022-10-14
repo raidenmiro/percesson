@@ -5,12 +5,13 @@
   "keywords": [
     "chrome-extension",
     "mozilla-extension",
-    "new tab page"
+    "new tab page",
+    "personal dashboard in chrome"
   ],
   "author": "Robert Kuzhin <rk.ku.202014@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
-  "packageManager": "pnpm@7.12.0",
+  "packageManager": "pnpm@7.13.4",
   "engines": {
     "node": ">=16"
   },
