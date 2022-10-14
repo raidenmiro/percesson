@@ -7,12 +7,12 @@ rules:
     spec: '$description() == ""'
 
 workflows:
-  - name: welcome-user 👋
-    description: Welcome user first contribution
+  - name: welcome-contributor 👋
+    description: Thanks for contribution
     if:
       - 'true'
     then:
-      - '$commentOnce("Well done! This is your first contribution.")'
+      - '$commentOnce("Well done! Thanks for contribution.")'
 
   - name: validate-commits 😌
     always-run: true
@@ -39,7 +39,7 @@ workflows:
     if:
       - rule: empty-description
     then:
-      - '$error("The description of the pull request cannot be empty.")'
+      - '$warn("The description of the pull request cannot be empty.")'
 
   - name: label-pull-requests-with-git-conflicts
     always-run: true
