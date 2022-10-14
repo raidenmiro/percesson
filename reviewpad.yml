@@ -6,26 +6,50 @@ rules:
   - name: empty-description
     spec: '$description() == ""'
 
-  - name: is-first-time-contributor
-    spec: '$pullRequestCountBy($author()) == 1'
-
 workflows:
-  - name: welcome-user
+  - name: welcome-user 👋
     description: Welcome user first contribution
     if:
-      - rule: is-first-time-contributor
+      - 'true'
     then:
       - '$commentOnce("Well done! This is your first contribution.")'
 
-  - name: comment-on-empty-description
+  - name: validate-commits 😌
+    always-run: true
+    if:
+      - 'true'
+    then:
+      - $commitLint()
+
+  - name: label-pull-request-with-size
+    always-run: true
+    if:
+      - rule: $size() <= 25
+        extra-actions:
+          - $addLabel("size-s")
+      - rule: $size() > 25 && $size() <= 100
+        extra-actions:
+          - $addLabel("size-m")
+      - rule: $size() > 100
+        extra-actions:
+          - $addLabel("size-l")
+
+  - name: comment-on-empty-description 🥲
     description: Error on empty descriptions
     if:
       - rule: empty-description
     then:
       - '$error("The description of the pull request cannot be empty.")'
 
-  - name: comment-on-pull-request
-    description: Example comment on pull request
+  - name: label-pull-requests-with-git-conflicts
+    always-run: true
+    if:
+      - $hasGitConflicts()
+    then:
+      - '$addLabel("conflicts")'
+
+  - name: comment-on-pull-request 🤗
+    description: Instruction
     if:
       - 'true'
     then:
