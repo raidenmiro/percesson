@@ -1,9 +1,10 @@
 /* eslint-disable solid/no-innerhtml */
 import { GreetFactory } from '../factory'
 
-export const Primary = (props: { text: string }) => {
+export const Primary = (props: { text?: string }) => {
   const text = () =>
-    props.text
+    props.text ??
+    ''
       .split('')
       .map(letter => `<span class='letter'>${letter}</span>`)
       .join('')

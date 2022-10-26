@@ -4,11 +4,7 @@ import { EnvService } from './env.service'
 import { validate } from './env.validation'
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      validate,
-    }),
-  ],
+  imports: [ConfigModule.forRoot({ validate })],
   providers: [EnvService],
   exports: [EnvService],
 })

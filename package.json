@@ -78,6 +78,7 @@
     "jest-environment-jsdom": "28.1.1",
     "lefthook": "^1.1.1",
     "nx": "14.7.8",
+    "openapi-typescript-codegen": "^0.23.0",
     "postcss": "^8.4.16",
     "prettier": "^2.6.2",
     "prettier-config-standard": "^5.0.0",
@@ -104,13 +105,15 @@
     "effector": "^22.3.0",
     "effector-solid": "^0.22.6",
     "env-var": "^7.3.0",
-    "joi": "^17.6.1",
+    "nestjs-zod": "^1.2.1",
     "patronum": "^1.12.2",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "^7.0.0",
     "solid-js": "^1.5.6",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zod": "^3.19.1",
+    "zod-prisma": "^0.5.4"
   },
   "config": {
     "commitizen": {
