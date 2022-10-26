@@ -1,23 +1,23 @@
 import * as env from 'env-var'
-import * as Joi from 'joi'
+import * as z from 'zod'
 
-const schema = Joi.object({
-  PORT: Joi.string().optional(),
-  DATABASE_URL: Joi.string().required(),
-  DATABASE_USERNAME: Joi.string().required(),
-  DATABASE_PASSWORD: Joi.string().required(),
-  UNSPLASH_TOKEN_ACCESS: Joi.string().required(),
-  UNSPLASH_URL: Joi.string().required(),
-  UNSPLASH_SECRET: Joi.string().optional(),
-  WEATHER_KEY: Joi.string().required(),
-  WEATHER_URL: Joi.string().required(),
-}).unknown()
+const schema = z.object({
+  PORT: z.string().optional(),
+  DATABASE_URL: z.string(),
+  DATABASE_USERNAME: z.string(),
+  DATABASE_PASSWORD: z.string(),
+  UNSPLASH_TOKEN_ACCESS: z.string(),
+  UNSPLASH_URL: z.string(),
+  UNSPLASH_SECRET: z.string().optional(),
+  WEATHER_KEY: z.string(),
+  WEATHER_URL: z.string(),
+})
 
 export function validate(config: Record<string, unknown>) {
-  const { error } = schema.validate(config)
+  const result = schema.safeParse(config)
 
-  if (error) {
-    throw new Error(`Provided not valid .env file: ${error}`)
+  if (!result.success) {
+    throw new Error(`Provided not valid .env file: ${result.error}`)
   }
 
   return {

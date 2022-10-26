@@ -1,6 +1,7 @@
 import { INestApplication, Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { patchNestJsSwagger } from 'nestjs-zod'
 import { AppModule } from './modules/app/app.module'
 
 const logger = new Logger('Application')
@@ -8,9 +9,10 @@ const PORT = 3333
 
 function setupSwaggerDocs(app: INestApplication) {
   const config = new DocumentBuilder()
-    .setTitle('Percesso-api')
-    .setDescription('Sync your stuff')
+    .setTitle('Percesso')
+    .setDescription('The percesso API')
     .setVersion('1.0')
+    .addTag('common')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
