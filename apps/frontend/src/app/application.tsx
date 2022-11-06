@@ -4,6 +4,7 @@ import { onMount } from 'solid-js'
 import { BackdropPhoto } from '../entities/backdrop/variants/backdrop-photo'
 import { TabBar } from '../entities/tab-bar'
 import { $theme, subscribeThemeFx, ThemeProvider } from '../features/theme'
+import { Timer } from '../features/pomodoro/variants/primary/timer'
 
 export const App = () => {
   const currentTheme = useUnit($theme)
@@ -25,7 +26,7 @@ export const App = () => {
         }}
       />
       <div class="flex items-end justify-center h-screen w-full">
-        <TabBar />
+        <Timer />
       </div>
     </ThemeProvider>
   )
