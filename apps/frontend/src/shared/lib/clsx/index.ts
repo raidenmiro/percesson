@@ -1,3 +1,1 @@
-export const clsx = (...args: unknown[]) => {
-  return args.filter(Boolean).join(' ')
-}
+export const clsx = (...args: unknown[]) => args.filter(Boolean).join(' ')
