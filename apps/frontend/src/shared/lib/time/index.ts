@@ -63,4 +63,31 @@ const getNow =
     }
   }
 
-export const time = { getCurrentDetails, applyToCss, getNow }
+const parseDuration = (duration: number) => {
+  const date = new Date(0)
+  date.setSeconds(duration)
+  const time = date.toISOString()
+
+  return {
+    minutes: Number(time.slice(14, 16)),
+    seconds: Number(time.slice(17, 19)),
+  }
+}
+
+const serialize = (time: { hours?: number; minutes?: number; seconds?: number; milliseconds?: number }) => {
+  const result: string[] = []
+
+  for (const unit of Object.entries(time)) {
+    const [key, value] = unit
+
+    if (typeof unit === 'undefined' || (key === 'hours' && value === 0)) {
+      continue
+    }
+
+    result.push(value < 10 ? `0${value}` : `${value}`)
+  }
+
+  return result.join(':')
+}
+
+export const time = { getCurrentDetails, applyToCss, getNow, parseDuration, serialize }
