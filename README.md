@@ -1,4 +1,4 @@
-# Percesso
+# Percesson
 
 Best personal dashboard for your browser
 
@@ -14,6 +14,7 @@ Best personal dashboard for your browser
 - Weather
 - Notes
 - Gmail
+- Pomodoro
 
 ## Setup for development
 
