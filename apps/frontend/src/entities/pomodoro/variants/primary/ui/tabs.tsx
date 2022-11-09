@@ -20,8 +20,8 @@ export const Tabs = () => {
           <li class="p-0 mr-2 last:mr-0">
             <label
               for={id}
+              class="focus:ring-4 focus:ring-blue-300 inline-block p-4 rounded-t-lg'"
               classList={{
-                'inline-block p-4 rounded-t-lg': true,
                 'border-b-2 border-blue-600': checked,
                 'hover:border-b-2 hover:border-gray-300 cursor-pointer': !checked,
               }}>
