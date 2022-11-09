@@ -1,3 +1,3 @@
 import { createWidget } from '../../shared/lib/widget'
 
-export const $tabBar = createWidget()
+export const tabBar = createWidget()
