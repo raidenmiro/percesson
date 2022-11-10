@@ -10,7 +10,7 @@ export interface Payload<TPayload> {
   payload: TPayload
 }
 
-type Variant = 'DEFAULT' | 'BREAK_SHORT' | 'BREAK_LONG'
+export type Variant = 'DEFAULT' | 'BREAK_SHORT' | 'BREAK_LONG'
 
 interface Timer {
   hours?: number
@@ -18,15 +18,9 @@ interface Timer {
   seconds: number
 }
 
-const syncWithTimeFx = createEffect<{ title: Timer }, void>({
+const syncWithTitleFx = createEffect<{ title: string }, void>({
   handler: async ({ title }) => {
-    document.title = `${time.serialize(title)} - Percesson`
-  },
-})
-
-const showCompleteFx = createEffect({
-  handler: async () => {
-    document.title = 'Finished - Percesson'
+    document.title = title
   },
 })
 
@@ -43,9 +37,11 @@ const { timerStarted, timerHalted } = split(timerToggle, {
   timerStarted: ({ type }) => type === 'run',
 })
 
-const $currentVariant = createStore<Variant>('DEFAULT')
+const currentVariantChanged = createEvent<{ type: Variant }>()
+
+const $currentVariant = createStore<Variant>('DEFAULT').on(currentVariantChanged, (_, { type }) => type)
 const $timerAmount = createStore<number>(0)
-const $currentTime = createStore<null | Timer>(null)
+const $currentTime = createStore<null | Timer>(null).reset(currentVariantChanged)
 const $percent = createStore(100)
 const $timerVariants = createStore({
   DEFAULT: { minutes: 25, seconds: 0 },
@@ -96,6 +92,12 @@ sample({
   target: worker.sendFx,
 })
 
+sample({
+  clock: currentVariantChanged,
+  fn: () => ({ event: 'STOP' }),
+  target: worker.sendFx,
+})
+
 const { init, tick, stop, completed } = split(worker.messageReceived, {
   init: ({ data }) => data.event === 'INIT',
   tick: ({ data }) => data.event === 'TICK',
@@ -122,14 +124,24 @@ sample({
 sample({
   clock: tick,
   fn: ({ data }) => ({
-    title: time.parseDuration(data.payload.time),
+    title: `${time.serialize(time.parseDuration(data.payload.time))} - Percesson`,
   }),
-  target: syncWithTimeFx,
+  target: syncWithTitleFx,
 })
 
-sample({ clock: completed, target: showCompleteFx })
+sample({
+  clock: completed,
+  fn: () => ({ title: 'Finished - Percesson' }),
+  target: syncWithTitleFx,
+})
+
+sample({
+  clock: currentVariantChanged,
+  fn: () => ({ title: 'Percesson' }),
+  target: syncWithTitleFx,
+})
 
 $timerRuined.reset(stop)
 $currentTime.reset(timerReset)
 
-export { $timer, pomodoroWidget, timerReset, timerToggle }
+export { $timer, currentVariantChanged, pomodoroWidget, timerReset, timerToggle }
