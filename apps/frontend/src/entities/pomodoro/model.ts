@@ -42,7 +42,7 @@ const currentVariantChanged = createEvent<{ type: Variant }>()
 const $currentVariant = createStore<Variant>('DEFAULT').on(currentVariantChanged, (_, { type }) => type)
 const $timerAmount = createStore<number>(0)
 const $currentTime = createStore<null | Timer>(null).reset(currentVariantChanged)
-const $percent = createStore(100)
+const $percent = createStore(100).reset(currentVariantChanged)
 const $timerVariants = createStore({
   DEFAULT: { minutes: 25, seconds: 0 },
   BREAK_SHORT: { minutes: 5, seconds: 0 },
