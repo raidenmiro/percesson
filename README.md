@@ -6,6 +6,7 @@ Best personal dashboard for your browser
 
 - Nx Typescript
 - Solid-js Qwik Nestjs Prisma Zod
+- Effector Rxjs
 - Tailwindcss daisy-ui
 - Eslint-kit Changeset Reviewpad Lefhook
 
