@@ -2,9 +2,7 @@ import './application.css'
 import { useUnit } from 'effector-solid'
 import { onMount } from 'solid-js'
 import { BackdropPhoto } from '../entities/backdrop/variants/backdrop-photo'
-import { TabBar } from '../entities/tab-bar'
 import { $theme, subscribeThemeFx, ThemeProvider } from '../features/theme'
-import { Timer } from '../features/pomodoro/variants/primary/timer'
 
 export const App = () => {
   const currentTheme = useUnit($theme)
@@ -25,9 +23,6 @@ export const App = () => {
           raw: 'https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixid=MnwzNjc2NjF8MHwxfGFsbHx8fHx8fHx8fDE2NjUxNDI0MTY&ixlib=rb-1.2.1',
         }}
       />
-      <div class="flex items-end justify-center h-screen w-full">
-        <Timer />
-      </div>
     </ThemeProvider>
   )
 }
