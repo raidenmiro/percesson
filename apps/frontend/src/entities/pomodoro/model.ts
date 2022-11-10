@@ -6,7 +6,7 @@ import { createWorker } from '../../shared/lib/workers/create-worker'
 import { parseToSeconds } from './lib'
 
 export interface Payload<TPayload> {
-  event: 'TICK' | 'STOP' | 'COMPLETED'
+  event: 'INIT' | 'TICK' | 'STOP' | 'COMPLETED'
   payload: TPayload
 }
 
@@ -17,6 +17,18 @@ interface Timer {
   minutes: number
   seconds: number
 }
+
+const syncWithTimeFx = createEffect<{ title: Timer }, void>({
+  handler: async ({ title }) => {
+    document.title = `${time.serialize(title)} - Percesson`
+  },
+})
+
+const showCompleteFx = createEffect({
+  handler: async () => {
+    document.title = 'Finished - Percesson'
+  },
+})
 
 const pomodoroWidget = createWidget()
 const worker = createWorker<Payload<{ time: number; percent: number; currentTime: number }>>({
@@ -31,6 +43,10 @@ const { timerStarted, timerHalted } = split(timerToggle, {
   timerStarted: ({ type }) => type === 'run',
 })
 
+const $currentVariant = createStore<Variant>('DEFAULT')
+const $timerAmount = createStore<number>(0)
+const $currentTime = createStore<null | Timer>(null)
+const $percent = createStore(100)
 const $timerVariants = createStore({
   DEFAULT: { minutes: 25, seconds: 0 },
   BREAK_SHORT: { minutes: 5, seconds: 0 },
@@ -39,11 +55,6 @@ const $timerVariants = createStore({
 const $timerRuined = createStore<boolean>(false)
   .on(timerStarted, () => true)
   .reset(timerHalted)
-
-const $currentVariant = createStore<Variant>('DEFAULT')
-const $timerAmount = createStore<number>(0)
-const $currentTime = createStore<null | Timer>(null)
-const $percent = createStore(100)
 
 const $timer = combine(
   [$timerVariants, $timerRuined, $currentVariant, $timerAmount, $currentTime, $percent],
@@ -57,11 +68,23 @@ const $timer = combine(
   },
 )
 
-sample({ clock: pomodoroWidget.watch.opened, target: worker.listenerFx })
+sample({ clock: pomodoroWidget.watch.opened, target: worker.start })
 sample({ clock: pomodoroWidget.watch.closed, target: worker.dispose })
 
+const { initTimer, continueTimer } = split(sample({ clock: timerStarted, source: $currentTime }), {
+  initTimer: time => time === null,
+  continueTimer: time => time !== null,
+})
+
 sample({
-  clock: timerStarted,
+  clock: initTimer,
+  source: $timer,
+  fn: timer => ({ event: 'INIT', maxTime: parseToSeconds(timer.time) }),
+  target: worker.sendFx,
+})
+
+sample({
+  clock: continueTimer,
   source: $timer,
   fn: timer => ({ event: 'START', initTime: parseToSeconds(timer.time) }),
   target: worker.sendFx,
@@ -73,10 +96,18 @@ sample({
   target: worker.sendFx,
 })
 
-const { tick, stop, completed } = split(worker.messageReceived, {
+const { init, tick, stop, completed } = split(worker.messageReceived, {
+  init: ({ data }) => data.event === 'INIT',
   tick: ({ data }) => data.event === 'TICK',
   stop: ({ data }) => data.event === 'STOP',
   completed: ({ data }) => data.event === 'COMPLETED',
+})
+
+sample({
+  clock: init,
+  source: $timer,
+  fn: timer => ({ event: 'START', initTime: parseToSeconds(timer.time) }),
+  target: worker.sendFx,
 })
 
 sample({
@@ -88,18 +119,6 @@ sample({
   target: spread({ targets: { percent: $percent, time: $currentTime } }),
 })
 
-const syncWithTimeFx = createEffect<{ title: Timer }, void>({
-  handler: async ({ title }) => {
-    document.title = `${time.serialize(title)} - Percesson`
-  },
-})
-
-const showCompleteFx = createEffect({
-  handler: async () => {
-    document.title = 'Finished - Percesson'
-  },
-})
-
 sample({
   clock: tick,
   fn: ({ data }) => ({
@@ -108,11 +127,9 @@ sample({
   target: syncWithTimeFx,
 })
 
-sample({
-  clock: completed,
-  target: showCompleteFx,
-})
+sample({ clock: completed, target: showCompleteFx })
 
 $timerRuined.reset(stop)
+$currentTime.reset(timerReset)
 
 export { $timer, pomodoroWidget, timerReset, timerToggle }
