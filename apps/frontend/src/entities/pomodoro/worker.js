@@ -15,6 +15,16 @@ self.addEventListener('message', ({ data }) => {
   const { event } = data
 
   try {
+    if (event === 'INIT') {
+      const { maxTime } = data
+
+      _maxTime = maxTime
+
+      self.postMessage({
+        event: 'INIT',
+      })
+    }
+
     if (event === 'START') {
       const { initTime } = data
 
@@ -42,7 +52,7 @@ self.addEventListener('message', ({ data }) => {
             event: 'TICK',
             payload: {
               time: _currentTime,
-              percent: Math.floor((_currentTime * 100) / 1500),
+              percent: Math.floor((_currentTime * 100) / _maxTime),
             },
           })
         }
