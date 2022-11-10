@@ -13,10 +13,6 @@ on:
       - edited
   pull_request_review:
 
-permissions:
-  pull-requests: write
-  issues: write
-
 jobs:
   reviewpad-action:
     runs-on: ubuntu-latest
@@ -24,5 +20,4 @@ jobs:
       - name: Running reviewpad action 🚀
         uses: reviewpad/action@v3.x
         with:
-          token: ${{ secrets.GH_TOKEN }}
           file: reviewpad.yml

@@ -21,19 +21,6 @@ workflows:
     then:
       - $commitLint()
 
-  - name: label-pull-request-with-size
-    always-run: true
-    if:
-      - rule: $size() <= 25
-        extra-actions:
-          - $addLabel("size-s")
-      - rule: $size() > 25 && $size() <= 100
-        extra-actions:
-          - $addLabel("size-m")
-      - rule: $size() > 100
-        extra-actions:
-          - $addLabel("size-l")
-
   - name: comment-on-empty-description 🥲
     description: Error on empty descriptions
     if:
