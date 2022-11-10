@@ -35,6 +35,7 @@ export const createWorker = <Payload>(config: { url: URL }) => {
   sample({ clock: dispose, target: disposeFx })
 
   return {
+    start,
     sendFx,
     $worker,
     dispose,
