@@ -1,4 +1,4 @@
-import { combine, createEvent, createStore, sample, split } from 'effector'
+import { combine, createEffect, createEvent, createStore, sample, split } from 'effector'
 import { spread } from 'patronum'
 import { time } from '../../shared/lib/time'
 import { createWidget } from '../../shared/lib/widget'
@@ -86,6 +86,31 @@ sample({
     time: time.parseDuration(data.payload.time),
   }),
   target: spread({ targets: { percent: $percent, time: $currentTime } }),
+})
+
+const syncWithTimeFx = createEffect<{ title: Timer }, void>({
+  handler: async ({ title }) => {
+    document.title = `${time.serialize(title)} - Percesson`
+  },
+})
+
+const showCompleteFx = createEffect({
+  handler: async () => {
+    document.title = 'Finished - Percesson'
+  },
+})
+
+sample({
+  clock: tick,
+  fn: ({ data }) => ({
+    title: time.parseDuration(data.payload.time),
+  }),
+  target: syncWithTimeFx,
+})
+
+sample({
+  clock: completed,
+  target: showCompleteFx,
 })
 
 $timerRuined.reset(stop)
