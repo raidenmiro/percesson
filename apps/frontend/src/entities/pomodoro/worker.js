@@ -27,6 +27,14 @@ self.addEventListener('message', ({ data }) => {
           clearInterval(_timerId)
 
           self.postMessage({
+            event: 'TICK',
+            payload: {
+              time: 0,
+              percent: 0,
+            },
+          })
+
+          self.postMessage({
             event: 'COMPLETED',
           })
         } else {
