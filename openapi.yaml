@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getData",
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/unsplash": {
+      "get": {
+        "operationId": "UnsplashController_getRandom",
+        "summary": "get random unsplash picture",
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "The found record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unsplash"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unsplash/{id}": {
+      "get": {
+        "operationId": "UnsplashController_findOne",
+        "summary": "find photo by id",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The found record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unsplash"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather": {
+      "get": {
+        "operationId": "WeatherController_getCurrent",
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Percesso",
+    "description": "The percesso API",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [
+    {
+      "name": "common",
+      "description": ""
+    }
+  ],
+  "servers": [
+
+  ],
+  "components": {
+    "schemas": {
+      "Unsplash": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "example": {
+              "created_at": "2016-05-03T11:00:28-04:00"
+            }
+          },
+          "updated_at": {
+            "type": "string",
+            "example": {
+              "updated_at": "2016-07-10T11:00:01-05:00"
+            }
+          },
+          "urls": {
+            "type": "object",
+            "description": "contains all dimensions",
+            "example": {
+              "raw": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d",
+              "full": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg",
+              "regular": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=1080&fit=max",
+              "small": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=400&fit=max",
+              "thumb": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max"
+            }
+          },
+          "author": {
+            "type": "object",
+            "description": "author picture",
+            "example": {
+              "id": "QPxL2MGqfrw",
+              "username": "exampleuser"
+            }
+          },
+          "location": {
+            "type": "object",
+            "description": "the location of the created photo",
+            "example": {
+              "name": "Montreal, Canada",
+              "city": "Montreal",
+              "country": "Canada"
+            }
+          },
+          "links": {
+            "type": "object",
+            "description": "meta information about photo",
+            "example": {
+              "self": "https://api.unsplash.com/photos/Dwu85P9SOIk",
+              "download": "https://unsplash.com/photos/Dwu85P9SOIk/download"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "urls",
+          "author",
+          "location",
+          "links"
+        ]
+      }
+    }
+  }
+}
