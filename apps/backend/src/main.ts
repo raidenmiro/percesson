@@ -1,7 +1,6 @@
 import { INestApplication, Logger } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { patchNestJsSwagger } from 'nestjs-zod'
 import { AppModule } from './modules/app/app.module'
 
 const logger = new Logger('Application')
@@ -23,6 +22,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
   setupSwaggerDocs(app)
+  app.enableCors()
 
   await app.listen(PORT)
   logger.log(`🚀 Application is running on: http://localhost:${PORT}`)

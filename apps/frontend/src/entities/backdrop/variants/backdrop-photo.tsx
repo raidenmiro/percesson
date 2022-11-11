@@ -1,10 +1,8 @@
-import { createMemo } from 'solid-js'
+import { useUnit } from 'effector-solid'
+import { Match, onMount, Switch } from 'solid-js'
+import { Unsplash } from '../../../shared/api'
 import { breakpoint, convert } from '../../../shared/lib/breakpoints'
-
-export interface Props {
-  url: { small: string; regular: string; raw: string }
-  name: string
-}
+import { $photo, started } from '../model'
 
 const scheme = {
   xs: 1079,
@@ -12,18 +10,30 @@ const scheme = {
   xl: 1920,
 }
 
-export const BackdropPhoto = (props: Props) => {
-  const unit = createMemo(() => convert.all(scheme, convert.units.px))
+export const BackdropPhoto = () => {
+  const photo = useUnit($photo)
+
+  const unit = convert.all(scheme, convert.units.px)
   const { up, down } = breakpoint.matcher
 
+  onMount(() => started())
+
   return (
-    <div class="fixed top-0 left-0 min-w-full min-h-full -z-10">
-      <picture>
-        <source srcset={props.url.small} media={down(unit().xs)} />
-        <source srcset={props.url.regular} media={breakpoint.merge(up(unit().md[0]), down(unit().md[1]))} />
-        <source srcset={props.url.raw} media={up(unit().xl)} />
-        <img class="w-full h-full object-cover" draggable={false} src={props.url.regular} alt={props.name} />
-      </picture>
-    </div>
+    <Switch fallback={<div></div>}>
+      <Match when={isPhotoProvided(photo())} keyed>
+        {({ id, urls }) => (
+          <div class="fixed top-0 left-0 min-w-full min-h-full -z-10">
+            <picture>
+              <source srcset={urls.small} media={down(unit.xs)} />
+              <source srcset={urls.regular} media={breakpoint.merge(up(unit.md[0]), down(unit.md[1]))} />
+              <source srcset={`${urls.raw}&q=80&w=1920`} media={up(unit.xl)} />
+              <img class="w-full h-full object-cover" draggable={false} src={urls.regular} alt={id} />
+            </picture>
+          </div>
+        )}
+      </Match>
+    </Switch>
   )
 }
+
+const isPhotoProvided = (photo: Unsplash | null): Unsplash | false => (photo !== null ? photo : false)
