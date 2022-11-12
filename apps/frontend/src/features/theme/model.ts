@@ -1,5 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from 'effector'
-import { theme } from './constance'
+import { theme } from './constants'
 import { Theme } from './type'
 
 const DEFAULT_THEME = 'dark'
