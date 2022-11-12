@@ -1,9 +1,30 @@
 import { useUnit } from 'effector-solid'
-import { createEffect, createSignal, JSX, onCleanup, onMount, splitProps } from 'solid-js'
+import { createEffect, createSignal, JSX, onCleanup, onMount, Setter, splitProps } from 'solid-js'
 import { Dynamic, Portal, Show } from 'solid-js/web'
 import { Optional } from '../types'
 import { Widget } from './create-widget'
 import type { Plugin, PluginCreator } from './plugins/create-plugin'
+
+interface WidgetContentFC {
+  isOpen: boolean
+  set: Setter<Optional<HTMLElement>>
+  component: JSX.Element
+  as?: keyof HTMLElementTagNameMap
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  attributes: JSX.HTMLAttributes<any>
+}
+
+// TODO FIX
+const WidgetContent = (_props: WidgetContentFC) => {
+  return (
+    <Show when={_props.isOpen} keyed={true}>
+      {/* eslint-disable-next-line solid/reactivity */}
+      <Dynamic ref={_props.set} component={_props.as ?? 'div'} {..._props.attributes}>
+        {_props.component}
+      </Dynamic>
+    </Show>
+  )
+}
 
 type Attributes<T> = JSX.HTMLAttributes<T> & { innerHTML?: string }
 type PickElement<Tag> = { [Key in keyof Tag]: Pick<Tag, Key> }
@@ -18,13 +39,15 @@ export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement
   mountNode = document.body,
   connector,
   plugins,
+  extend,
 }: {
   mountNode?: HTMLElement
   connector: Widget // eslint-disable-next-line @typescript-eslint/no-explicit-any
   plugins: Array<PluginCreator<any>>
+  extend?: (widget: JSX.Element) => JSX.Element
 }) => {
-  return function (props: Props<TagName, TElement>) {
-    const [rest, attr] = splitProps(props, ['children', 'as'])
+  return function (_props: Props<TagName, TElement>) {
+    const [props, attributes] = splitProps(_props, ['children', 'as'])
 
     const isOpen = useUnit(connector.state.$isOpen)
     const [ref, setRef] = createSignal<Optional<HTMLElement>>(null)
@@ -51,12 +74,31 @@ export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement
 
     return (
       <Portal mount={mountNode}>
-        <Show when={isOpen()} keyed={true}>
-          <Dynamic ref={setRef} component={rest.as ?? 'div'} {...attr}>
-            {rest.children}
-          </Dynamic>
+        <Show when={isDefined(extend)} keyed={true}>
+          {extend =>
+            extend(
+              <WidgetContent
+                isOpen={isOpen()}
+                attributes={attributes}
+                set={setRef}
+                component={props.children}
+                as={props.as as keyof HTMLElementTagNameMap}
+              />,
+            )
+          }
+        </Show>
+        <Show when={!isDefined(extend)} keyed={false}>
+          <WidgetContent
+            isOpen={isOpen()}
+            attributes={attributes}
+            set={setRef}
+            component={props.children}
+            as={props.as as keyof HTMLElementTagNameMap}
+          />
         </Show>
       </Portal>
     )
   }
 }
+
+const isDefined = <T,>(value: T | undefined): T | false => (typeof value === 'undefined' ? false : value)
