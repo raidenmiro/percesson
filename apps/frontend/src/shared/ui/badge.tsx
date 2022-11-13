@@ -2,11 +2,11 @@ import { JSX, splitProps } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { clsx } from '../lib/clsx'
 
-const Anchor = (_props: { children: JSX.Element; customClass?: string } & JSX.HTMLAttributes<HTMLDivElement>) => {
-  const [props, attributes] = splitProps(_props, ['customClass', 'children'])
+const Anchor = (_props: { children: JSX.Element; classes?: string } & JSX.HTMLAttributes<HTMLDivElement>) => {
+  const [props, attributes] = splitProps(_props, ['classes', 'children'])
 
   return (
-    <div class={clsx('relative', props.customClass)} {...attributes}>
+    <div class={clsx('relative', props.classes)} {...attributes}>
       {props.children}
     </div>
   )
@@ -15,7 +15,7 @@ const Anchor = (_props: { children: JSX.Element; customClass?: string } & JSX.HT
 const Notify = (props: {
   as?: keyof HTMLElementTagNameMap
   variant?: 'square' | 'circle'
-  customClass?: string
+  classes?: string
   baseColor: string
   bgColor: string
   placement?: 'start-left' | 'start-right' | 'bottom-left' | 'bottom-right'
@@ -36,7 +36,7 @@ const Notify = (props: {
     <Dynamic
       style={styles()}
       component={props.as ?? 'span'}
-      class={clsx('inline-flex justify-center items-center font-bold absolute', props.customClass)}
+      class={clsx('inline-flex justify-center items-center font-bold absolute', props.classes)}
       classList={{
         'rounded-full': getVariant() === 'circle',
         'rounded-sm': getVariant() === 'square',

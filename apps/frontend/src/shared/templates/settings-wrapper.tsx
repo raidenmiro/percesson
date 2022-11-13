@@ -1,13 +1,14 @@
 import { JSX } from 'solid-js'
+import { clsx } from '../lib/clsx'
 import { Badge } from '../ui/badge'
 
-export const SettingsWrapper = (props: { children: JSX.Element }) => {
+export const SettingsWrapper = (props: { children: JSX.Element; classes?: string }) => {
   return (
-    <Badge.Anchor customClass="max-w-md group">
+    <Badge.Anchor classes={clsx('group', props.classes)}>
       {props.children}
       <Badge.Notify
         as="button"
-        customClass="transition-opacity duration-300 opacity-0 group-hover:opacity-100 p-1"
+        classes="transition-opacity duration-300 opacity-0 group-hover:opacity-100 p-1"
         baseColor="white"
         bgColor="orange"
         label={<SettingsSvg />}

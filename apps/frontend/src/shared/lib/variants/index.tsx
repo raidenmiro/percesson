@@ -14,23 +14,24 @@ import { children, JSX, Match, splitProps, Switch } from 'solid-js'
  */
 
 export const createVariants = <
-  Key extends string,
   Props extends Record<string, unknown>,
-  Cases extends Record<Key, (props: Props) => JSX.Element>,
+  Key extends string = string,
+  Cases extends Record<Key, (props: Props) => JSX.Element> = Record<
+    string,
+    (props: Record<string, unknown>) => JSX.Element
+  >,
 >(config: {
   variants: Cases
   otherwise?: JSX.Element
 }) => {
-  return (props: Props & { variant: keyof Cases }) => {
-    const [_, providedProps] = splitProps(props, ['variant'])
-
-    const variantCase = () => config.variants[props.variant] as unknown as JSX.Element
+  return (_props: Props & { variant: keyof Cases }) => {
+    const variantCase = () => config.variants[_props.variant] as unknown as JSX.Element
     const Component = children(() => variantCase())
 
     return (
       <Switch fallback={config.otherwise}>
         <Match when={variantCase()} keyed={false}>
-          <Component {...providedProps} />
+          <Component />
         </Match>
       </Switch>
     )
