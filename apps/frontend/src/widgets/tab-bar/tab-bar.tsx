@@ -31,9 +31,9 @@ export const TabBar = (_props: TabBarProps) => {
         <For each={tabs()}>
           {item => (
             <li
+              class="flex items-center justify-center align-bottom pr-4 pl-1 duration-200"
               style={either(item.label === 'add_new', actionButtonStyles(), {})}
               classList={{
-                'flex items-center justify-center align-bottom pr-4 pl-1 duration-200': true,
                 'hover:-translate-y-5 hover:scale-125 hover:mr-4 hover:ml-4': item.label !== 'add_new',
               }}>
               {item.icon}

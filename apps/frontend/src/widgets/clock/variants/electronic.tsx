@@ -1,5 +1,6 @@
 import { createMemo, createSignal, onCleanup } from 'solid-js'
 import { time } from '../../../shared/lib/time'
+import { ClockFactory } from '../factory'
 import { scheduler } from '../lib'
 
 export const Electronic = (props: { showDetails?: boolean }) => {
@@ -24,10 +25,10 @@ export const Electronic = (props: { showDetails?: boolean }) => {
   onCleanup(unSubscribe)
 
   return (
-    <div class="p-0 select-none">
+    <ClockFactory class="p-0 select-none">
       <span style={{ 'font-size': '170px' }} class="font-bold text-black dark:text-white">
         {formattedTime()}
       </span>
-    </div>
+    </ClockFactory>
   )
 }
