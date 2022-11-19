@@ -25,7 +25,7 @@
     "docker:dev:down": "",
     "docker:prod:start": "",
     "docker:prod:down": "",
-    "typegen": "node ./generate",
+    "openapi": "node ./openapi.config.js",
     "test": "nx run-many --target=test --all",
     "lint": "nx run-many --target=lint --all",
     "lint:fix": "nx run-many --target=lint --all --fix",
