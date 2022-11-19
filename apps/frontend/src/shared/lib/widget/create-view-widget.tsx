@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any,solid/reactivity */
 import { useUnit } from 'effector-solid'
 import { createEffect, createSignal, JSX, onCleanup, onMount, Setter, splitProps } from 'solid-js'
 import { Dynamic, Portal, Show } from 'solid-js/web'
@@ -10,15 +11,12 @@ interface WidgetContentFC {
   set: Setter<Optional<HTMLElement>>
   component: JSX.Element
   as?: keyof HTMLElementTagNameMap
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes: JSX.HTMLAttributes<any>
 }
 
-// TODO FIX
 const WidgetContent = (_props: WidgetContentFC) => {
   return (
     <Show when={_props.isOpen} keyed={true}>
-      {/* eslint-disable-next-line solid/reactivity */}
       <Dynamic ref={_props.set} component={_props.as ?? 'div'} {..._props.attributes}>
         {_props.component}
       </Dynamic>
@@ -42,7 +40,7 @@ export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement
   extend,
 }: {
   mountNode?: HTMLElement
-  connector: Widget // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  connector: Widget
   plugins: Array<PluginCreator<any>>
   extend?: (widget: JSX.Element) => JSX.Element
 }) => {

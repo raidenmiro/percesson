@@ -1,7 +1,7 @@
 import { createViewWidget } from '../../shared/lib/widget'
-import { $weather } from './model'
+import { weatherWidget } from './model'
 
 export const WeatherFactory = createViewWidget({
-  connector: $weather,
+  connector: weatherWidget,
   plugins: [],
 })

@@ -1,15 +1,10 @@
 import { attach, createEvent, createStore, sample } from 'effector'
-import { Api, Unsplash } from '../../shared/api'
+import { $apiInstance } from '../../shared/api'
+import type { Unsplash } from '../../shared/api/internal'
 import { Optional } from '../../shared/lib/types'
 
-export const $instance = createStore(
-  new Api({
-    baseUrl: 'http://localhost:3333',
-  }),
-)
-
 export const loadRandomPhotoFx = attach({
-  source: $instance,
+  source: $apiInstance,
   async effect(api) {
     const answer = await api.unsplash.unsplashControllerGetRandom()
 

@@ -1,4 +1,4 @@
-import { Optional } from '../../../types'
+import { isDefined, Optional } from '../../../types'
 import { createPlugin } from '../create-plugin'
 
 type ListenersEvents = keyof WindowEventMap
@@ -35,9 +35,11 @@ export const OutsideClicked = createPlugin<
         ref = listener
       },
       unMount() {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        if (ref) subscribes.forEach(fn => setup.element.removeEventListener(fn))
+        if (isDefined(ref)) {
+          const listener = ref
+
+          subscribes.forEach(fn => setup.element.removeEventListener(fn, listener))
+        }
       },
     }
   },
