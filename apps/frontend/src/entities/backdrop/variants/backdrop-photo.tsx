@@ -1,6 +1,6 @@
 import { useUnit } from 'effector-solid'
 import { Match, onMount, Switch } from 'solid-js'
-import { Unsplash } from '../../../shared/api'
+import type { Unsplash } from '../../../shared/api/internal'
 import { breakpoint, convert } from '../../../shared/lib/breakpoints'
 import { $photo, started } from '../model'
 
