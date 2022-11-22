@@ -6,7 +6,7 @@ import { Dynamic } from 'solid-js/web'
 import type { Optional } from '../../../shared/lib/types'
 
 export const Droppable = (_props: { children: JSX.Element; id: string; classesDropAccept?: string }) => {
-  const props = mergeProps(_props, { classesDropAccept: '' })
+  const props = mergeProps({ classesDropAccept: '' }, _props)
 
   const [ref, setRef] = createSignal<Optional<HTMLDivElement>>(null)
   const droppable = createDroppable(props.id)

@@ -14,7 +14,7 @@
     },
   })
 
-  interface Props extends ExtractClasses<typeof classes> {
+  interface Props extends ExtractMatrixParams<typeof classes> {
     label: string
   }
 
