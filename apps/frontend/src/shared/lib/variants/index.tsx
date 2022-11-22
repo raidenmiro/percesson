@@ -1,4 +1,4 @@
-import { children, JSX, Match, splitProps, Switch } from 'solid-js'
+import { children, JSX, Match, Switch } from 'solid-js'
 
 /*
  * const Clock = createVariants(
