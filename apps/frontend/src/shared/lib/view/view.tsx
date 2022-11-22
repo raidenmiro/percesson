@@ -1,5 +1,5 @@
-import { JSX, mergeProps, splitProps } from 'solid-js'
-import { Dynamic } from 'solid-js/web'
+import { createMemo, JSX, mergeProps, splitProps } from 'solid-js'
+import { Dynamic, Show } from 'solid-js/web'
 import { clsx } from '../clsx'
 
 type Layer = JSX.Element
@@ -7,7 +7,7 @@ type Attributes<TElement extends Element> = JSX.HTMLAttributes<TElement>
 type ExtractElementByTag<Tag extends keyof HTMLElementTagNameMap> = HTMLElementTagNameMap[Tag]
 
 interface VariationLayer {
-  variant: string
+  name: string
   template: Layer
 }
 
@@ -27,29 +27,27 @@ const Root = <TVariation extends VariationLayer, Tag extends keyof HTMLElementTa
   const props = mergeProps({ as: 'div' }, _props)
   const [base, attributes] = splitProps(props, ['children', 'as', 'current', 'inject', 'fallback'])
 
-  return (
-    <Dynamic class={clsx(attributes.class)} component={base.as} {...attributes}>
-      {base.children}
-    </Dynamic>
-  )
-}
+  const layout = createMemo(() => {
+    for (const record of base.inject) {
+      if (record.name === base.current) {
+        return record.template
+      }
+    }
 
-const Item = <Tag extends keyof HTMLElementTagNameMap>(
-  _props: { children: JSX.Element; as?: Tag } & Attributes<ExtractElementByTag<Tag>>,
-) => {
-  const props = mergeProps({ as: 'div' }, _props)
-  const [base, attributes] = splitProps(props, ['children', 'as'])
+    return null
+  })
 
   return (
     <Dynamic class={clsx(attributes.class)} component={base.as} {...attributes}>
-      {base.children}
+      <Show when={layout() !== null} keyed={false}>
+        <Dynamic component={layout()}>{base.children}</Dynamic>
+      </Show>
     </Dynamic>
   )
 }
 
 const View = {
   Root,
-  Item,
 }
 
-export { type Layer, type VariationLayer, type VariationLayers, View }
+export { type VariationLayers, View }
