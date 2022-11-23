@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "strictNullChecks": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "classmatrix": ["packages/classmatrix/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

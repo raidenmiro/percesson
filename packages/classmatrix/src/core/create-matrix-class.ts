@@ -1,35 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-/*
-  const classes = createMatrixClasses({
-    variants: {
-      color: {
-        violet: 'bg-purple-600',
-        gray: 'bg-gray-100',
-      },
-      size: {
-        small: 'w-30 h-30',
-        large: 'w-60 h-60'
-      },
-    },
-  })
-
-  interface Props extends ExtractMatrixParams<typeof classes> {
-    label: string
-  }
-
-  const Button = (_props: Props & Attributes<HTMLButtonElement>) => {
-    const [props, attr] = splitProps(_props, [...])
-
-    return (
-      <button class={classes.register({ color: props.color ?? 'gray', size: props.size ?? 'small' })} {...attr}>
-        {props.label}
-      </button>
-    )
-  }
- */
-
-type ExtractMatrixParams<T extends ReturnType<typeof createMatrixClasses<any, any>>> = T['_output']
+// eslint-disable-next-line prettier/prettier
+type ExtractMatrixParams<T extends ReturnType<typeof createMatrixClasses<never, never>>> = T['_output']
 type Classes = string
 
 const createMatrixClasses = <
@@ -77,4 +47,4 @@ const createMatrixClasses = <
   }
 }
 
-export { type ExtractMatrixParams, createMatrixClasses }
+export { type Classes, type ExtractMatrixParams, createMatrixClasses }

@@ -1,0 +1,8 @@
+{
+  "name": "classmatrix",
+  "version": "0.0.0",
+  "scripts": {},
+  "peerDependencies": {
+    "solid-js": "^1.6.2"
+  }
+}
