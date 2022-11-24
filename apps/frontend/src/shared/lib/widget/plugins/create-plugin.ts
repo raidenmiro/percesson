@@ -13,7 +13,7 @@ export type PluginCreator<TPurpose extends Element> = (element: TPurpose) => Plu
 export const createPlugin = <TConfig extends Record<string, unknown>, TPurpose extends Element>(config: {
   creator: (setup: PluginOptions<TConfig, TPurpose>) => Plugin
 }) => {
-  return function (options: TConfig) {
-    return (element: TPurpose) => config.creator({ element, options })
+  return function (options: TConfig extends { [key in string]: never } ? void : TConfig) {
+    return (element: TPurpose) => config.creator({ element, options: options as TConfig })
   }
 }
