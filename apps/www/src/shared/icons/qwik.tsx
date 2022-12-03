@@ -29,4 +29,4 @@ export const QwikLogo = () => (
       fill="white"
     />
   </svg>
-);
+)
