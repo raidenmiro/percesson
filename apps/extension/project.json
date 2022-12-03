@@ -1,5 +1,5 @@
 {
-  "sourceRoot": "apps/frontend/src",
+  "sourceRoot": "apps/extension/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -8,16 +8,16 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/apps/frontend",
-        "index": "apps/frontend/src/index.html",
+        "outputPath": "dist/apps/extension",
+        "index": "apps/extension/src/index.html",
         "baseHref": "/",
-        "main": "apps/frontend/src/main.tsx",
-        "tsConfig": "apps/frontend/tsconfig.app.json",
-        "assets": ["apps/frontend/src/favicon.ico"],
+        "main": "apps/extension/src/main.tsx",
+        "tsConfig": "apps/extension/tsconfig.app.json",
+        "assets": ["apps/extension/src/favicon.ico"],
         "styles": [],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack",
-        "postcssConfig": "apps/frontend/postcss.config.js"
+        "postcssConfig": "apps/extension/postcss.config.js"
       },
       "configurations": {
         "development": {
@@ -29,8 +29,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/frontend/src/environments/environment.ts",
-              "with": "apps/frontend/src/environments/environment.prod.ts"
+              "replace": "apps/extension/src/environments/environment.ts",
+              "with": "apps/extension/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -46,15 +46,15 @@
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "frontend:build",
+        "buildTarget": "extension:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "frontend:build:development"
+          "buildTarget": "extension:build:development"
         },
         "production": {
-          "buildTarget": "frontend:build:production",
+          "buildTarget": "extension:build:production",
           "hmr": false
         }
       }
@@ -63,14 +63,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/frontend/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/extension/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/frontend"],
+      "outputs": ["coverage/apps/extension"],
       "options": {
-        "jestConfig": "apps/frontend/jest.config.ts",
+        "jestConfig": "apps/extension/jest.config.ts",
         "passWithNoTests": true
       }
     }

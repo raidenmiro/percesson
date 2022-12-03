@@ -9,6 +9,30 @@
  * ---------------------------------------------------------------
  */
 
+export interface Urls {
+  full: string
+  regular: string
+  small: string
+  thumb: string
+  raw: string
+}
+
+export interface Author {
+  id: string
+  username: string
+}
+
+export interface Location {
+  name: string
+  city: string
+  country: string
+}
+
+export interface Links {
+  self: string
+  download: string
+}
+
 export interface Unsplash {
   id: string
   /** @example {"created_at":"2016-05-03T11:00:28-04:00"} */
@@ -19,22 +43,22 @@ export interface Unsplash {
    * contains all dimensions
    * @example {"raw":"https://images.unsplash.com/photo-1417325384643-aac51acc9e5d","full":"https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg","regular":"https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=1080&fit=max","small":"https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=400&fit=max","thumb":"https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max"}
    */
-  urls: any
+  urls: Urls
   /**
    * author picture
    * @example {"id":"QPxL2MGqfrw","username":"exampleuser"}
    */
-  author: object
+  author: Author
   /**
    * the location of the created photo
    * @example {"name":"Montreal, Canada","city":"Montreal","country":"Canada"}
    */
-  location: object
+  location: Location
   /**
    * meta information about photo
    * @example {"self":"https://api.unsplash.com/photos/Dwu85P9SOIk","download":"https://unsplash.com/photos/Dwu85P9SOIk/download"}
    */
-  links: object
+  links: Links
 }
 
 export type QueryParamsType = Record<string | number, any>

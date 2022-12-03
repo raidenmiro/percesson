@@ -1,15 +1,15 @@
 {
-  "sourceRoot": "apps/web-site/src",
+  "sourceRoot": "apps/www/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/web:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/web-site",
-        "entryFile": "apps/web-site/src/root.ts",
-        "tsConfig": "apps/web-site/src/tsconfig.json",
-        "project": "apps/web-site/src/package.json",
+        "outputPath": "dist/apps/www",
+        "entryFile": "apps/www/src/root.ts",
+        "tsConfig": "apps/www/src/tsconfig.json",
+        "project": "apps/www/src/package.json",
         "format": ["esm"],
         "generateExportsField": true,
         "compiler": "babel"
@@ -35,21 +35,21 @@
       "executor": "@nrwl/workspace:run-commands",
       "options": {
         "command": "pnpm run dev",
-        "cwd": "apps/web-site"
+        "cwd": "apps/www"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/web-site/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/www/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/web-site"],
+      "outputs": ["coverage/apps/www"],
       "options": {
-        "jestConfig": "apps/web-site/jest.config.ts",
+        "jestConfig": "apps/www/jest.config.ts",
         "passWithNoTests": true
       }
     }

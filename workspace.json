@@ -2,10 +2,9 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "classmatrix": "packages/classmatrix",
     "backend": "apps/backend",
-    "frontend": "apps/frontend",
-    "frontend-e2e": "apps/frontend-e2e",
-    "web-site": "apps/web-site"
+    "extension": "apps/extension",
+    "extension-e2e": "apps/extension-e2e",
+    "www": "apps/www"
   }
 }

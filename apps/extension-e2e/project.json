@@ -1,17 +1,17 @@
 {
-  "sourceRoot": "apps/frontend-e2e/src",
+  "sourceRoot": "apps/extension-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/frontend-e2e/cypress.config.ts",
-        "devServerTarget": "frontend:serve:development",
+        "cypressConfig": "apps/extension-e2e/cypress.config.ts",
+        "devServerTarget": "exte:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "frontend:serve:production"
+          "devServerTarget": "exte:serve:production"
         }
       }
     },
@@ -19,10 +19,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/frontend-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/extension-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["frontend"]
+  "implicitDependencies": ["extension"]
 }

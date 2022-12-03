@@ -20,6 +20,7 @@ export class Unsplash {
   updated_at: string
 
   @ApiProperty({
+    type: Urls,
     description: 'contains all dimensions',
     example: {
       raw: 'https://images.unsplash.com/photo-1417325384643-aac51acc9e5d',
@@ -32,6 +33,7 @@ export class Unsplash {
   urls: { row: Urls }
 
   @ApiProperty({
+    type: Author,
     description: 'author picture',
     example: {
       id: 'QPxL2MGqfrw',
@@ -41,6 +43,7 @@ export class Unsplash {
   author: Author
 
   @ApiProperty({
+    type: Location,
     description: 'the location of the created photo',
     example: {
       name: 'Montreal, Canada',
@@ -51,6 +54,7 @@ export class Unsplash {
   location: Location
 
   @ApiProperty({
+    type: Links,
     description: 'meta information about photo',
     example: {
       self: 'https://api.unsplash.com/photos/Dwu85P9SOIk',
