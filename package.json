@@ -33,6 +33,7 @@
     "format": "nx format:write",
     "start": "nx run-many --target=serve --all",
     "build": "nx run-many --target=build --all",
+    "changes": "changeset",
     "lint:changes": "changeset status"
   },
   "devDependencies": {
