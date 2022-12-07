@@ -32,9 +32,10 @@ git clone git@github.com:raidenmiro/percesson.git
 - Change `env.example` to `.env`
 
 ```dotenv
+# Optional
 PORT=3333
 
-#
+# Database
 DATABASE_URL=
 DATABASE_USERNAME=
 DATABASE_PASSWORD=
