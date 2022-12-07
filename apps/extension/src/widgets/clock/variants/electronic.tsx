@@ -25,8 +25,8 @@ export const Electronic = (props: { showDetails?: boolean }) => {
   onCleanup(unSubscribe)
 
   return (
-    <ClockFactory class="p-0 select-none">
-      <span style={{ 'font-size': '170px' }} class="font-bold text-black dark:text-white">
+    <ClockFactory class="absolute top-28 left-5 p-0 select-none">
+      <span style={{ 'font-size': '270px' }} class="font-bold text-white dark:text-white">
         {formattedTime()}
       </span>
     </ClockFactory>

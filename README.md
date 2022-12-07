@@ -1,6 +1,10 @@
-# Percesson
+# Percesson (🚧 WIP)
 
-Best personal dashboard for your browser
+Best personal dashboard for your browser. Create your own variations of widgets, with different positions and themes.
+
+## Example of a variation
+
+![page](preview.png)
 
 ## Technologies
 

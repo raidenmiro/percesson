@@ -5,3 +5,5 @@ export const ClockFactory = createViewWidget({
   connector: clockWidget,
   plugins: [],
 })
+
+clockWidget.action.open()

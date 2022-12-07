@@ -9,7 +9,7 @@ export const Primary = () => {
   return (
     <GreetFactory
       as="h1"
-      class="absolute top-5 text-white text-7xl"
+      class="absolute bottom-96 left-5 text-white text-7xl"
       innerHTML={text()
         .split('')
         .map(letter => `<span class='letter'>${letter}</span>`)

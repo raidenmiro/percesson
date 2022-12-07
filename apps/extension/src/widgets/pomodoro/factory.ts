@@ -5,3 +5,5 @@ export const PomodoroFactory = createViewWidget({
   connector: pomodoroWidget,
   plugins: [],
 })
+
+pomodoroWidget.action.open()
