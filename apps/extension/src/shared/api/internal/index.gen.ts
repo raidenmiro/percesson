@@ -61,6 +61,56 @@ export interface Unsplash {
   links: Links
 }
 
+export interface Coord {
+  lon: number
+  lat: number
+}
+
+export interface Wind {
+  speed: number
+  deg: number
+  gust: number
+}
+
+export interface Main {
+  temp: number
+  feels_like: number
+  temp_min: number
+  temp_max: number
+  pressure: number
+  humidity: number
+  sea_level: number
+  grnd_level: number
+}
+
+export interface Sys {
+  id: number
+  type: number
+  country: string
+  sunrise: number
+  sunset: number
+  name: string
+}
+
+export interface Weather {
+  id: string
+  /** @example {"lon":10.99,"lat":44.34} */
+  coord: Coord
+  /** @example "stations" */
+  base: string
+  /** @example 10000 */
+  visibility: string
+  /** @example {"speed":0.62,"deg":349,"gust":1.18} */
+  wind: Wind
+  rain: object
+  clouds: object
+  dt: number
+  timezone: number
+  name: string
+  main: Main
+  sys: Sys
+}
+
 export type QueryParamsType = Record<string | number, any>
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>
 
@@ -328,12 +378,37 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @name WeatherControllerGetCurrent
+     * @summary get current weather by coords
      * @request GET:/weather
      */
-    weatherControllerGetCurrent: (params: RequestParams = {}) =>
-      this.request<void, any>({
+    weatherControllerGetCurrent: (
+      query: {
+        lon: number
+        lat: number
+        lang: string
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<Weather, any>({
         path: `/weather`,
         method: 'GET',
+        query: query,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name WeatherControllerGetCurrentByCity
+     * @summary get current weather by city
+     * @request GET:/weather/{city}
+     */
+    weatherControllerGetCurrentByCity: (city: string, params: RequestParams = {}) =>
+      this.request<Weather, any>({
+        path: `/weather/${city}`,
+        method: 'GET',
+        format: 'json',
         ...params,
       }),
   }

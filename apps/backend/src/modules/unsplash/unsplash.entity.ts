@@ -6,6 +6,7 @@ export class Unsplash {
   id: string
 
   @ApiProperty({
+    type: String,
     example: {
       created_at: '2016-05-03T11:00:28-04:00',
     },
@@ -13,6 +14,7 @@ export class Unsplash {
   created_at: string
 
   @ApiProperty({
+    type: String,
     example: {
       updated_at: '2016-07-10T11:00:01-05:00',
     },

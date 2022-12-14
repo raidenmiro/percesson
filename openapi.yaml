@@ -66,12 +66,71 @@
     "/weather": {
       "get": {
         "operationId": "WeatherController_getCurrent",
+        "summary": "get current weather by coords",
         "parameters": [
-
+          {
+            "name": "lon",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lat",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "lang",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather/{city}": {
+      "get": {
+        "operationId": "WeatherController_getCurrentByCity",
+        "summary": "get current weather by city",
+        "parameters": [
+          {
+            "name": "city",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Weather"
+                }
+              }
+            }
           }
         }
       }
@@ -110,13 +169,17 @@
           },
           "thumb": {
             "type": "string"
+          },
+          "raw": {
+            "type": "string"
           }
         },
         "required": [
           "full",
           "regular",
           "small",
-          "thumb"
+          "thumb",
+          "raw"
         ]
       },
       "Author": {
@@ -247,6 +310,184 @@
           "author",
           "location",
           "links"
+        ]
+      },
+      "Coord": {
+        "type": "object",
+        "properties": {
+          "lon": {
+            "type": "number"
+          },
+          "lat": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "lon",
+          "lat"
+        ]
+      },
+      "Wind": {
+        "type": "object",
+        "properties": {
+          "speed": {
+            "type": "number"
+          },
+          "deg": {
+            "type": "number"
+          },
+          "gust": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "speed",
+          "deg",
+          "gust"
+        ]
+      },
+      "Main": {
+        "type": "object",
+        "properties": {
+          "temp": {
+            "type": "number"
+          },
+          "feels_like": {
+            "type": "number"
+          },
+          "temp_min": {
+            "type": "number"
+          },
+          "temp_max": {
+            "type": "number"
+          },
+          "pressure": {
+            "type": "number"
+          },
+          "humidity": {
+            "type": "number"
+          },
+          "sea_level": {
+            "type": "number"
+          },
+          "grnd_level": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "temp",
+          "feels_like",
+          "temp_min",
+          "temp_max",
+          "pressure",
+          "humidity",
+          "sea_level",
+          "grnd_level"
+        ]
+      },
+      "Sys": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "type": {
+            "type": "number"
+          },
+          "country": {
+            "type": "string"
+          },
+          "sunrise": {
+            "type": "number"
+          },
+          "sunset": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "country",
+          "sunrise",
+          "sunset",
+          "name"
+        ]
+      },
+      "Weather": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "coord": {
+            "example": {
+              "lon": 10.99,
+              "lat": 44.34
+            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Coord"
+              }
+            ]
+          },
+          "base": {
+            "type": "string",
+            "example": "stations"
+          },
+          "visibility": {
+            "type": "string",
+            "example": 10000
+          },
+          "wind": {
+            "example": {
+              "speed": 0.62,
+              "deg": 349,
+              "gust": 1.18
+            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Wind"
+              }
+            ]
+          },
+          "rain": {
+            "type": "object"
+          },
+          "clouds": {
+            "type": "object"
+          },
+          "dt": {
+            "type": "number"
+          },
+          "timezone": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "main": {
+            "$ref": "#/components/schemas/Main"
+          },
+          "sys": {
+            "$ref": "#/components/schemas/Sys"
+          }
+        },
+        "required": [
+          "id",
+          "coord",
+          "base",
+          "visibility",
+          "wind",
+          "rain",
+          "clouds",
+          "dt",
+          "timezone",
+          "name",
+          "main",
+          "sys"
         ]
       }
     }
