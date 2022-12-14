@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseInterceptors } from '@nestjs/common'
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { EnvService } from '../env'
 import { WeatherDto } from './weather.dto'
@@ -19,5 +19,15 @@ export class WeatherController {
   })
   async getCurrent(@Query() query: WeatherDto) {
     return this.weatherService.getCurrent(query)
+  }
+
+  @ApiOperation({ summary: 'get current weather by city' })
+  @ApiResponse({
+    status: 200,
+    type: Weather,
+  })
+  @Get('/:city')
+  async getCurrentByCity(@Param('city') city: string) {
+    return this.weatherService.getCurrentByCity({ city })
   }
 }
