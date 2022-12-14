@@ -14,4 +14,12 @@ export class WeatherService {
       params: { lat, lon, lang },
     })
   }
+
+  async getCurrentByCity({ city }: { city: string }) {
+    return request(this.httpService, {
+      url: `/weather`,
+      method: 'GET',
+      params: { q: city, units: 'metric' },
+    })
+  }
 }
