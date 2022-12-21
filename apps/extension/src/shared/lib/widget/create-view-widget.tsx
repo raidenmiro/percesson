@@ -34,12 +34,10 @@ interface Props<Tag extends HTMLElementTagNameMap, TElement = PickElement<Tag>> 
 }
 
 export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement = PickElement<TagName>>({
-  mountNode = document.body,
   connector,
   plugins,
   extend,
 }: {
-  mountNode?: HTMLElement
   connector: Widget
   plugins: Array<PluginCreator<any>>
   extend?: (widget: JSX.Element) => JSX.Element
@@ -71,7 +69,7 @@ export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement
     })
 
     return (
-      <Portal mount={mountNode}>
+      <>
         <Show when={isDefined(extend)} keyed={true}>
           {extend =>
             extend(
@@ -94,7 +92,7 @@ export const createViewWidget = <TagName extends HTMLElementTagNameMap, TElement
             as={props.as as keyof HTMLElementTagNameMap}
           />
         </Show>
-      </Portal>
+      </>
     )
   }
 }
