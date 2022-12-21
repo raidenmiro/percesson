@@ -2,7 +2,8 @@
 import { createDraggable, Transformer } from '@thisbeyond/solid-dnd'
 import { JSX, mergeProps } from 'solid-js'
 import { useDndSnap } from '../hook'
-import { getBounds, restrictToBoundingRect, snapToGrid } from '../lib'
+import { getWindowClientRect, rectCache } from '../lib'
+import { restrictToBoundingRect, snapToGrid } from '../modifiers'
 
 export const MovementWidget = (_props: {
   children: JSX.Element
@@ -12,12 +13,15 @@ export const MovementWidget = (_props: {
 }) => {
   const props = mergeProps({ classesOnInside: '', gridSize: 30 }, _props)
 
-  const [state, { onDragStart, addTransformer }] = useDndSnap()
+  const [state, { onDragStart, onDragMove, addTransformer }] = useDndSnap()
   const draggable = createDraggable(props.id)
+
+  const getRectFromCache = rectCache()
+  const windowRect = getWindowClientRect()
 
   const snapToGridTransformer: Transformer = {
     id: 'snap-to-grid',
-    order: 100,
+    order: 300,
     callback(transform) {
       return snapToGrid({
         transform,
@@ -28,7 +32,7 @@ export const MovementWidget = (_props: {
 
   const limitWindowTransformer: Transformer = {
     id: 'limit-window',
-    order: 100,
+    order: 200,
     callback(transform) {
       const draggable = state.active.overlay ?? state.active.draggable
 
@@ -36,15 +40,21 @@ export const MovementWidget = (_props: {
         return transform
       }
 
+      const node = draggable.node.childNodes.item(0)
+
       return restrictToBoundingRect(transform, {
-        elementRect: draggable.node.getBoundingClientRect(),
-        boundsRect: getBounds(),
+        elementRect: getRectFromCache(node as HTMLElement, draggable.id),
+        boundsRect: windowRect,
       })
     },
   }
 
   onDragStart(({ draggable }) => {
     addTransformer('draggables', draggable.id, snapToGridTransformer)
+  })
+
+  onDragMove(({ draggable }) => {
+    addTransformer('draggables', draggable.id, limitWindowTransformer)
   })
 
   return (
