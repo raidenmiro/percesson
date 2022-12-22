@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "devDependencies": {
-    "class-variance-authority": "^0.3.0"
+    "class-variance-authority": "^0.3.0",
+    "solid-js": "^1.5.6"
   },
   "peerDependencies": {
     "class-variance-authority": "^0.3.0",

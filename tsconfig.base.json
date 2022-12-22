@@ -16,7 +16,7 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "classmatrix": ["packages/classmatrix/index.ts"]
+      "@trove-contrast/solid": ["packages/trove-contrast/src/solid.tsx"]
     }
   },
   "exclude": ["node_modules", "tmp"]

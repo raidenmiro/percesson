@@ -1,0 +1,30 @@
+lockfileVersion: 5.4
+
+specifiers:
+  class-variance-authority: ^0.3.0
+  solid-js: ^1.5.6
+
+devDependencies:
+  class-variance-authority: 0.3.0
+  solid-js: 1.6.6
+
+packages:
+
+  /class-variance-authority/0.3.0:
+    resolution: {integrity: sha512-TFO+pzY9Gedqv8crPhprd647wxhvfpKevPPjiMcteEWsnkHX9yZrD1xMY3ZhRZnLwHUHCCP0LYO6KZIVag/5wQ==}
+    peerDependencies:
+      typescript: '>= 4.5.5 < 5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dev: true
+
+  /csstype/3.1.1:
+    resolution: {integrity: sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==}
+    dev: true
+
+  /solid-js/1.6.6:
+    resolution: {integrity: sha512-5x33mEbPI8QLuywvFjQP4krjWDr8xiYFgZx9KCBH7b0ZzypQCHaUubob7bK6i+1u6nhaAqhWtvXS587Kb8DShA==}
+    dependencies:
+      csstype: 3.1.1
+    dev: true

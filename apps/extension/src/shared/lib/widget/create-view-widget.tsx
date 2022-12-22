@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,solid/reactivity */
 import { useUnit } from 'effector-solid'
 import { createEffect, createSignal, JSX, onCleanup, onMount, Setter, splitProps } from 'solid-js'
-import { Dynamic, Portal, Show } from 'solid-js/web'
+import { Dynamic, Show } from 'solid-js/web'
 import { Optional } from '../types'
 import { Widget } from './create-widget'
 import type { Plugin, PluginCreator } from './plugins/create-plugin'
