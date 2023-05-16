@@ -1,3 +1,3 @@
-export function either<C extends boolean, L, R>(condition: C, left: L, right: R): L | R {
+export function either<L, R>(condition: boolean, left: L, right: R): R | L {
   return condition ? left : right
 }

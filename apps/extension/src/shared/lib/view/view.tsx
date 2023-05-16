@@ -1,5 +1,5 @@
-import { createMemo, JSX, mergeProps, splitProps } from 'solid-js'
-import { Dynamic, Show } from 'solid-js/web'
+import { Component, createMemo, JSX, mergeProps, Show, splitProps } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
 import { clsx } from '../clsx'
 
 /*
@@ -63,8 +63,8 @@ const Root = <TVariation extends VariationLayout, Tag extends keyof HTMLElementT
 
   return (
     <Dynamic class={clsx(attributes.class)} component={base.as} {...attributes}>
-      <Show when={layout() !== null} keyed={false}>
-        <Dynamic component={layout()}>{base.children}</Dynamic>
+      <Show when={layout()} keyed={false}>
+        {layout => <Dynamic component={layout as Component<any>}>{base.children}</Dynamic>}
       </Show>
     </Dynamic>
   )

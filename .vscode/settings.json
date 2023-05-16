@@ -1,3 +1,24 @@
 {
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "[!a]*/**": true,
+    "a[!p]*/**": true,
+    "ap[!p]*/**": true,
+    "app[!s]*/**": true,
+    "apps/[!e]*/**": true,
+    "apps/e[!x]*/**": true,
+    "apps/ex[!t]*/**": true,
+    "apps/ext[!e]*/**": true,
+    "apps/exte[!n]*/**": true,
+    "apps/exten[!s]*/**": true,
+    "apps/extens[!i]*/**": true,
+    "apps/extensi[!o]*/**": true,
+    "apps/extensio[!n]*/**": true
+  }
 }

@@ -19,12 +19,12 @@ export interface SpacerConfig {
   measuringUnit: 'px' | 'rem'
 }
 
-export const createSpacer = <TElementTag extends HTMLElementTagNameMap, TNode extends keyof TElementTag>({
+export const createSpacer = <Tag extends keyof HTMLElementTagNameMap>({
   config,
   node,
 }: {
   config: { factor?: number; precision?: number; divisor?: number; measuringUnit?: string }
-  node?: TNode
+  node?: Tag
 }) => {
   const defaultConfig = {
     factor: 4,

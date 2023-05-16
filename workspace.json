@@ -5,7 +5,6 @@
     "backend": "apps/backend",
     "extension": "apps/extension",
     "extension-e2e": "apps/extension-e2e",
-    "www": "apps/www",
-    "trove-contrast": "packages/trove-contrast"
+    "www": "apps/www"
   }
 }
