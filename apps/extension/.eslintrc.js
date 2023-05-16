@@ -10,7 +10,7 @@ module.exports = configure({
     }),
     presets.prettier(),
     presets.solidJs(),
-    presets.effector(),
+    presets.effector({ strict: true }),
     presets.typescript(),
   ],
   extend: {
