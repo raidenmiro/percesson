@@ -3,8 +3,7 @@ import { useUnit } from 'effector-solid'
 import { onMount } from 'solid-js'
 import { BackdropPhoto } from '../entities/backdrop/variants/backdrop-photo'
 import { $theme, subscribeThemeFx, ThemeProvider } from '../features/theme'
-import { Clock } from '../widgets/clock'
-import { Greet } from '../widgets/greet'
+import { Dock } from '../widgets/dock'
 import { Pomodoro } from '../widgets/pomodoro'
 
 export const App = () => {
@@ -16,10 +15,9 @@ export const App = () => {
 
   return (
     <ThemeProvider value={currentTheme()}>
-      <BackdropPhoto />
+      {/* <BackdropPhoto /> */}
       <Pomodoro variant="primary" />
-      <Clock variant="primary" />
-      <Greet variant="primary" />
+      <Dock variant="default" />
     </ThemeProvider>
   )
 }

@@ -1,3 +1,5 @@
 import { createWidget } from '../../shared/lib/widget'
 
-export const tabBar = createWidget()
+export const dock = createWidget()
+
+dock.action.open()

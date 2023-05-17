@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios'
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { Observable } from 'rxjs'
 import { EnvService } from '../env'
 
@@ -11,7 +11,7 @@ export class WeatherInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<unknown>): Observable<unknown> {
     this.httpService.axiosRef.interceptors.request.use(req => {
       const token = this.envService.weather.key
-      const url = axios.getUri(req)
+      const url = axios.getUri(req as AxiosRequestConfig)
 
       return {
         ...req,

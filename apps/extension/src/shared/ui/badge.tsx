@@ -26,7 +26,7 @@ const Notify = (props: {
 
   const styles = () => ({
     '--badge-color': props.baseColor,
-    'border-width': 1,
+    'border-width': '1px',
     color: 'var(--badge-color)',
     background: props.bgColor,
     'border-color': 'var(--badge-color)',

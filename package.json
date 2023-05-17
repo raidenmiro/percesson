@@ -106,7 +106,7 @@
     "vitest": "^0.25.8"
   },
   "dependencies": {
-    "@nestjs/axios": "^0.1.1",
+    "@nestjs/axios": "^2.0.0",
     "@nestjs/common": "^9.4.1",
     "@nestjs/config": "^2.3.2",
     "@nestjs/core": "^9.4.1",
@@ -116,7 +116,7 @@
     "@swc/helpers": "~0.4.14",
     "@thisbeyond/solid-dnd": "^0.7.4",
     "animejs": "^3.2.1",
-    "axios": "^0.27.2",
+    "axios": "^1.4.0",
     "effector": "22.4.0",
     "effector-solid": "^0.22.7",
     "env-var": "^7.3.1",
